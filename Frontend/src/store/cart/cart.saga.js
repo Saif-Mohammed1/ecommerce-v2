@@ -1,9 +1,11 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest, debounce } from "redux-saga/effects";
 import { CART_ACTION_TYPES } from "./cart.types";
 import { userCart, userCartId } from "./cart.action";
 import api from "../../utils/axios/axios";
 
-function* removeCartItem({ payload: { cartItems, removeProduct, userId } }) {
+function* removeCartItem({
+  payload: { cartItems, removeProduct, userId, totalClick },
+}) {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === removeProduct.id
   );
@@ -17,20 +19,29 @@ function* removeCartItem({ payload: { cartItems, removeProduct, userId } }) {
     return;
   }
 
-  const updatedQuantity = Number(existingCartItem.quantity) - 1;
-  try {
-    yield api.put(`/cart/${removeProduct.id}`, {
-      quantity: updatedQuantity,
-      user_id: userId,
-      product_id: removeProduct.id,
-    });
-    yield put(userCartId(userId));
-  } catch (error) {
-    alert("failed to remove item");
+  const updatedQuantity = Number(existingCartItem.quantity) - totalClick;
+  if (updatedQuantity < 1) {
+    try {
+      yield api.delete(`/cart/${removeProduct.id}`);
+      yield put(userCartId(userId));
+    } catch (error) {
+      alert("failed to remove item");
+    }
+  } else {
+    try {
+      yield api.put(`/cart/${removeProduct.id}`, {
+        quantity: updatedQuantity,
+        user_id: userId,
+        product_id: removeProduct.id,
+      });
+      yield put(userCartId(userId));
+    } catch (error) {
+      alert("failed to remove item");
+    }
   }
 }
 function* fetchRemoveCartItem() {
-  yield takeLatest(CART_ACTION_TYPES.REMOVE_CART_ITEM, removeCartItem);
+  yield debounce(1000, CART_ACTION_TYPES.REMOVE_CART_ITEM, removeCartItem);
 }
 function* clearCartItems({ payload: { clearProduct, userId } }) {
   try {
@@ -44,22 +55,33 @@ function* clearCartItems({ payload: { clearProduct, userId } }) {
 function* fetchClearCartItems() {
   yield takeLatest(CART_ACTION_TYPES.CLEAR_CART_ITEMS, clearCartItems);
 }
-function* addICartItems({ payload: { cartItems, addProduct, userId } }) {
+function* addICartItems({
+  payload: { cartItems, addProduct, userId, totalClick },
+}) {
   const formData = new FormData();
 
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === addProduct.id
   );
   if (existingCartItem) {
-    const updatedQuantity = Number(existingCartItem.quantity) + 1;
-
-    yield api.put(`/cart/${addProduct.id}`, {
-      quantity: updatedQuantity,
-      user_id: userId,
-      product_id: addProduct.id,
-    });
-    yield put(userCartId(userId));
-    return;
+    const updatedQuantity = Number(existingCartItem.quantity) + totalClick;
+    try {
+      yield api.put(`/cart/${addProduct.id}`, {
+        quantity: updatedQuantity,
+        user_id: userId,
+        product_id: addProduct.id,
+      });
+      yield put(userCartId(userId));
+      return;
+    } catch (err) {
+      if (err.response.status === 404) {
+        alert("product not available anymore");
+      } else {
+        alert("failed to add product");
+      }
+      yield put(userCartId(userId));
+      return;
+    }
   }
 
   Object.entries(addProduct).filter(([key, value]) => {
@@ -71,7 +93,7 @@ function* addICartItems({ payload: { cartItems, addProduct, userId } }) {
   try {
     formData.append("user_id", userId);
     formData.append("product_id", addProduct.id);
-    formData.append("quantity", 1);
+    formData.append("quantity", totalClick);
     yield api.post(`/cart`, formData);
     yield put(userCartId(userId));
   } catch (err) {
@@ -79,7 +101,8 @@ function* addICartItems({ payload: { cartItems, addProduct, userId } }) {
   }
 }
 function* fetchUserCartItems() {
-  yield takeLatest(CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
+  // yield takeLatest(CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
+  yield debounce(500, CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
 }
 
 function* fetchUserCart({ payload }) {

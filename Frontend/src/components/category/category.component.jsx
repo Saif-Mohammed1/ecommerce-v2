@@ -17,15 +17,18 @@ const Category = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
   const categoriesArray = useSelector(selectCategoriesArray);
   const isLoading = useSelector(selectIsLoading);
-
-  const [product, setProduct] = useState(categoriesMap[category]);
+  const [product, setProduct] = useState(
+    categoriesMap[category.charAt(0).toLocaleUpperCase() + category.slice(1)]
+  );
 
   const checkTitleExists = categoriesArray.some(
-    (item) => item.title === category
+    (item) => item.title.toLowerCase() === category
   );
 
   useEffect(() => {
-    setProduct(categoriesMap[category]);
+    setProduct(
+      categoriesMap[category.charAt(0).toLocaleUpperCase() + category.slice(1)]
+    );
   }, [category, categoriesMap]);
 
   //mysql

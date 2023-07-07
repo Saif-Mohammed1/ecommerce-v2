@@ -15,17 +15,12 @@ const SearchFiled = () => {
   useEffect(() => {
     setData(categoriesArray);
   }, [categoriesArray]);
-
   useEffect(() => {
-    const filteredData = data.map(({ title, items }) => ({
-      title,
-      items: items.filter(({ name }) =>
-        name.toLowerCase().startsWith(`${useSearch.get("name").toLowerCase()}`)
-      ),
-    }));
+    const filteredData = data.filter(({ name }) =>
+      name.toLowerCase().startsWith(`${useSearch.get("name").toLowerCase()}`)
+    );
     setFilteredData(filteredData);
-  }, [useSearch.get("name"), data]);
-
+  }, [useSearch.get("name"), categoriesArray]);
   /*
   useEffect(() => {
     setFilteredData(
@@ -41,17 +36,11 @@ const SearchFiled = () => {
   return (
     <SearchFieldContainer>
       {filteredData.length ? (
-        filteredData.map(({ items, title }) => (
-          <BeforeProductCard>
-            {items.map((item, indx) => (
-              <ProductCard
-                key={item.id || indx + 1}
-                item={item}
-                title={title.toLowerCase()}
-              />
-            ))}
-          </BeforeProductCard>
-        ))
+        <BeforeProductCard>
+          {filteredData.map((item, indx) => (
+            <ProductCard key={item.id || indx + 1} item={item} />
+          ))}
+        </BeforeProductCard>
       ) : (
         <EmptyItems> There are no Items To Show</EmptyItems>
       )}

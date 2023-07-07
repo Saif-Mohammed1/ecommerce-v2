@@ -7,18 +7,32 @@ import {
 } from "../../store/cart/cart.action";
 import { selectCartItems } from "../../store/cart/cart.selectors";
 import { selectCurrentUser } from "../../store/user/user.selectors";
+import { useEffect, useState } from "react";
 const CheckOutItems = ({ cartItem }) => {
   const { imageUrl, imageFile, name, quantity, price } = cartItem;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const currentUser = useSelector(selectCurrentUser);
 
+  const [totalClick, setTotalClick] = useState(1);
+
+  useEffect(() => {
+    setTotalClick(1);
+  }, [cartItems]);
+
   const clearCartItem = () =>
     dispatch(clearCartItems(cartItem, currentUser.id));
-  const removeItemsHandler = () =>
-    dispatch(removeItems(cartItems, cartItem, currentUser.id));
-  const addItemToCartHandler = () =>
-    dispatch(addItemToCart(cartItems, cartItem, currentUser.id));
+  const removeItemsHandler = () => {
+    setTotalClick(totalClick + 1);
+
+    dispatch(removeItems(cartItems, cartItem, currentUser.id, totalClick));
+  };
+
+  const addItemToCartHandler = () => {
+    setTotalClick(totalClick + 1);
+
+    dispatch(addItemToCart(cartItems, cartItem, currentUser.id, totalClick));
+  };
   return (
     <tbody>
       <tr>

@@ -193,17 +193,18 @@ export const NavLink = styled(Link)`
       font-size: 9px;
     }
   }
-
+  .add {
+    color: white;
+    font-size: 50px;
+    &:hover {
+      color: cornflowerblue;
+    }
+  }
   @media (max-width: 690px) {
     margin: 0 5px;
     .add {
-      color: white;
-      font-size: 31px;
+      font-size: 36px;
     }
-  }
-  .add {
-    color: white;
-    font-size: 36px;
   }
 `;
 
@@ -243,6 +244,9 @@ export const SignOut = styled.p`
   .out {
     padding: 2px;
     cursor: pointer;
+    &:hover {
+      color: cornflowerblue;
+    }
   }
 `;
 export const Bars = styled(FontAwesomeIcon)`
@@ -252,6 +256,7 @@ export const Bars = styled(FontAwesomeIcon)`
     width: 46px;
     font-size: 36px;
     margin-left: 10px;
+    color: ${GlColor};
     cursor: pointer;
   }
 `;

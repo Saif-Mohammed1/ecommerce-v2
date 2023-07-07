@@ -7,6 +7,7 @@ import { homeItemsStart } from "./store/home/home.action";
 import Spinner from "./components/spinner/spinner.component";
 import { selectCurrentUser } from "./store/user/user.selectors";
 import { userCartId } from "./store/cart/cart.action";
+import { selectCartCount } from "./store/cart/cart.selectors";
 const Navigation = lazy(() =>
   import("./components/router/navigation/navigation.component")
 );
@@ -28,6 +29,7 @@ const NotFoundPage = lazy(() =>
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const count = useSelector(selectCartCount);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -48,13 +50,8 @@ const App = () => {
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
           <Route path="shop/*" element={<Shop />} />
-          {currentUser ? (
-            <Route path="auth" element={<Navigate to="*" />} />
-          ) : (
-            <Route path="auth/*" element={<Authentication />} />
-          )}
-
-          <Route path="checkOut" element={<CheckOut />} />
+          {!currentUser && <Route path="auth/*" element={<Authentication />} />}
+          {count && <Route path="checkOut" element={<CheckOut />} />}
           <Route path="search" element={<SearchFiled />} />
           <Route path="about" element={<About />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -71,7 +71,7 @@ const Navigation = () => {
           )}
           {currentUser ? (
             <SignOut>
-              <span>Hello : {currentUser.name} </span>
+              <span>Hello : {currentUser.name.split(" ")[0]} </span>
               <span className="out" onClick={signOutHandler}>
                 Sign Out
               </span>

@@ -5,10 +5,7 @@ export const AddItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
   align-items: center;
-  margin: 0 auto;
-  width: 79%;
 
   padding: 10px;
   select {
@@ -24,7 +21,7 @@ export const AddItemsContainer = styled.div`
 export const AddItemsForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   padding: 0 11px;
   /* outline: none; */
   /* border: none; */

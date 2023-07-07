@@ -91,7 +91,10 @@ const AddItems = () => {
         formData.append(key, value);
       }
     });
-    formData.append("title", title.toLowerCase());
+    formData.append(
+      "title",
+      title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()
+    );
 
     dispatch(addCategoriesStart(formData));
   };

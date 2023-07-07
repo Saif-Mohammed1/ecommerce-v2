@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use Faker\Core\Number;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MainPage>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class MainPageFactory extends Factory
+class ProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,11 +18,13 @@ class MainPageFactory extends Factory
     {
         return [
             'title' => fake()->title(),
-            'shop' => 'shop now',
             'imageUrl' => fake()->imageUrl(),
-            'route' => "/post/".rand(),
-
+            'name' => fake()->name(),
+            'imageFile' => '',
+            'price' => fake()->randomFloat(1, 1, 500),
+            'rating' => fake()->randomFloat(1, 1, 5),
 
         ];
+
     }
 }

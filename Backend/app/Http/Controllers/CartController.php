@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CartRequest;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
@@ -30,7 +32,8 @@ class CartController extends Controller
             'name', \Illuminate\Support\Facades\DB::raw('CAST(quantity AS SIGNED INTEGER) as quantity')
 
             ,
-            'price'
+            'price',
+
         )->get();
 
         return $cart->toArray();
@@ -76,18 +79,29 @@ class CartController extends Controller
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
         ])->first();
+        $product = Product::where(
+            'id', $request->product_id,
+        )->first();
 
         $request->validate([
             'quantity' => ['required', 'numeric'],
         ]);
 
         if ($cart) {
-            $cart->update([
-                'quantity' => $request->quantity,
-            ]);
-        }
+            if ($product) {
+                $cart->update([
+                    'quantity' => $request->quantity,
+                ]);
+                return $cart;
 
-        return $cart;
+            } else {
+
+                $this->destroy($request->product_id);
+
+                return response()->json(['errors' => 'product not available any more'], Response::HTTP_NOT_FOUND);
+            }
+
+        }
 
     }
 

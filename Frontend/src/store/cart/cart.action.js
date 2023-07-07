@@ -1,18 +1,20 @@
 import { createAction } from "../../utils/reducer/reducer.utils";
 import { CART_ACTION_TYPES } from "./cart.types";
 
-export const addItemToCart = (cartItems, addProduct, userId) =>
+export const addItemToCart = (cartItems, addProduct, userId, totalClick) =>
   createAction(CART_ACTION_TYPES.ADD_CART_ITEMS, {
     cartItems,
     addProduct,
     userId,
+    totalClick,
   });
 
-export const removeItems = (cartItems, removeProduct, userId) =>
+export const removeItems = (cartItems, removeProduct, userId, totalClick) =>
   createAction(CART_ACTION_TYPES.REMOVE_CART_ITEM, {
     cartItems,
     removeProduct,
     userId,
+    totalClick,
   });
 export const clearCartItems = (clearProduct, userId) =>
   createAction(CART_ACTION_TYPES.CLEAR_CART_ITEMS, {

@@ -35,15 +35,15 @@ export const ProductCardContainer = styled.div`
   }
 `;
 
-export const Details = styled.div`
-  display: flex;
-  justify-content: space-between;
-  span {
-    font-family: Open Sans Condensed, sans-serif;
-    margin: 0;
-    margin-bottom: 11px;
-  }
-`;
+// export const Details = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   span {
+//     font-family: Open Sans Condensed, sans-serif;
+//     margin: 0;
+//     margin-bottom: 11px;
+//   }
+// `;
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,6 +66,23 @@ export const Form = styled.form`
     padding: 3px;
     width: fit-content;
     cursor: pointer;
+    margin-left: 8px;
+  }
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
+`;
+export const FomContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  @media (max-width: 750px) {
+    flex-direction: column;
   }
 `;
 

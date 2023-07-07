@@ -19,11 +19,7 @@ const Shop = () => {
     <Routes>
       <Route index element={<CategoriesPreview />} />
       <Route path=":category" element={<Category />} />
-      {adminExist ? (
-        <Route path="/addItems" element={<AddItems />} />
-      ) : (
-        <Route path="/addItems" element={<NotFoundPage />} />
-      )}
+      {adminExist && <Route path="/addItems" element={<AddItems />} />}
     </Routes>
   );
 };

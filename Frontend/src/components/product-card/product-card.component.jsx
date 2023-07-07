@@ -1,6 +1,7 @@
 import {
   AddItem,
-  Details,
+  // Details,
+  FomContainer,
   Form,
   Info,
   ProductCardContainer,
@@ -20,11 +21,14 @@ import {
   updateAndAddCategoriesStart,
 } from "../../store/categories/categories.action";
 import api from "../../utils/axios/axios";
+import { selectCategoriesErrors } from "../../store/categories/categories.selectors";
+import { ErrorStyle } from "../router/add-new-items/add-items.styles";
 const defaultFiled = { id: null, name: "", price: "", imageUrl: "" };
-const ProductCard = ({ item, title, Delete }) => {
+const ProductCard = ({ item, title }) => {
   const IsAdmin = useSelector(isAdminExist);
   const cartItem = useSelector(selectCartItems);
   const currentUser = useSelector(selectCurrentUser);
+  const updatedErrors = useSelector(selectCategoriesErrors);
 
   const [cartItems, setCartItems] = useState(cartItem);
   const [change, setChange] = useState(false);
@@ -32,17 +36,28 @@ const ProductCard = ({ item, title, Delete }) => {
   const { name, price, imageUrl, rating, imageFile } = item;
   const [isEdit, setEdit] = useState(false);
   const [imgFileUpdate, setImgFileUpdate] = useState("");
+  const [error, setError] = useState([]);
+  const [totalClick, setTotalClick] = useState(1);
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (currentUser) {
       setCartItems(cartItem);
     }
+    setTotalClick(1);
     // Update cartItems when cartItem changes
   }, [cartItem]);
+  useEffect(() => {
+    if (isEdit) {
+      setError(updatedErrors);
+    }
+    // Update cartItems when cartItem changes
+  }, [updatedErrors]);
 
-  const addItemsHandler = (userId) =>
-    dispatch(addItemToCart(cartItems, item, userId));
+  const addItemsHandler = (userId) => {
+    setTotalClick(totalClick + 1);
+    dispatch(addItemToCart(cartItems, item, userId, totalClick));
+  };
 
   const handleAddItem = (event) => {
     event.preventDefault();
@@ -85,9 +100,10 @@ const ProductCard = ({ item, title, Delete }) => {
         src={imageUrl && imageUrl !== "" ? imageUrl : imageFile}
         alt={name}
       />
-      <Details>
-        {isEdit ? (
-          <Form method="put" onSubmit={handleAddItem}>
+      {/* <Details> */}
+      {isEdit ? (
+        <Form method="put" onSubmit={handleAddItem}>
+          <FomContainer>
             <div>
               <input
                 type="text"
@@ -96,6 +112,9 @@ const ProductCard = ({ item, title, Delete }) => {
                 value={updateItems.name}
                 onChange={handleInputChange}
               />
+              {error.name && <ErrorStyle>{error.name}</ErrorStyle>}
+            </div>
+            <div>
               <input
                 name="price"
                 value={updateItems.price}
@@ -104,7 +123,10 @@ const ProductCard = ({ item, title, Delete }) => {
                 onChange={handleInputChange}
                 min={0}
               />
-              {imageUrl && imageUrl !== "" ? (
+              {error.price && <ErrorStyle>{error.price}</ErrorStyle>}
+            </div>
+            {imageUrl && imageUrl !== "" ? (
+              <div>
                 <input
                   name="imageUrl"
                   value={updateItems.imageUrl}
@@ -112,54 +134,63 @@ const ProductCard = ({ item, title, Delete }) => {
                   placeholder="Enter New imageUrl"
                   onChange={handleInputChange}
                 />
-              ) : (
+                {error.imageUrl && (
+                  <ErrorStyle>The imageurl field is required</ErrorStyle>
+                )}
+              </div>
+            ) : (
+              <div>
                 <input
                   name="imageFile"
                   type="file"
                   onChange={(e) => setImgFileUpdate(e.target.files[0])}
                   placeholder="Enter New imageUrl"
                 />
-              )}
-            </div>
-            <input type="submit" />
-          </Form>
-        ) : (
-          <>
-            <span>{name}</span>
-            <Info>
-              <p>{price}$</p>
-              <div>
-                {rating &&
-                  Array(rating * 1)
-                    .fill()
-                    .map((_, i) => <p>⭐</p>)}
+                {error.imageFile && (
+                  <ErrorStyle>The imageFile field is required</ErrorStyle>
+                )}
               </div>
-            </Info>
-          </>
-        )}
+            )}
+          </FomContainer>
+          <input type="submit" />
+        </Form>
+      ) : (
+        <>
+          <span>{name}</span>
+          <Info>
+            <p>{price}$</p>
+            <div>
+              {rating &&
+                Array(rating * 1)
+                  .fill()
+                  .map((_, i) => <p>⭐</p>)}
+            </div>
+          </Info>
+        </>
+      )}
 
-        {currentUser && currentUser.id && (
-          <AddItem
-            onClick={() => {
-              addItemsHandler(currentUser.id);
-              setChange(!change);
-            }}
-          >
-            Add Product
-          </AddItem>
-        )}
+      {currentUser && currentUser.id && (
+        <AddItem
+          onClick={() => {
+            addItemsHandler(currentUser.id);
+            setChange(!change);
+          }}
+        >
+          Add Product
+        </AddItem>
+      )}
 
-        {IsAdmin && (
-          <>
-            <UpdateItem className="update" onClick={() => setEdit(true)}>
-              Update Product
-            </UpdateItem>
-            <RemoveItem className="remove" onClick={removeItem}>
-              X
-            </RemoveItem>
-          </>
-        )}
-      </Details>
+      {IsAdmin && (
+        <>
+          <UpdateItem className="update" onClick={() => setEdit(true)}>
+            Update Product
+          </UpdateItem>
+          <RemoveItem className="remove" onClick={removeItem}>
+            X
+          </RemoveItem>
+        </>
+      )}
+      {/* </Details> */}
     </ProductCardContainer>
   );
 };
