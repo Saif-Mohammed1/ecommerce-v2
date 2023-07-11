@@ -102,7 +102,7 @@ function* addICartItems({
 }
 function* fetchUserCartItems() {
   // yield takeLatest(CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
-  yield debounce(500, CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
+  yield debounce(1000, CART_ACTION_TYPES.ADD_CART_ITEMS, addICartItems);
 }
 
 function* fetchUserCart({ payload }) {

@@ -5,6 +5,8 @@ export const Table = styled.table`
   margin: 90px auto;
   text-align: center;
   position: relative;
+  caption-side: top;
+
   caption {
     margin-bottom: 30px;
     font-weight: 500;

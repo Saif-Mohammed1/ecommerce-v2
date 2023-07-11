@@ -47,7 +47,7 @@ const CheckOutItems = ({ cartItem }) => {
         <td>
           <Arrow onClick={removeItemsHandler}> &lt; </Arrow>
 
-          <span>{quantity}</span>
+          <span style={{ margin: "0 4px" }}>{quantity}</span>
           <Arrow onClick={addItemToCartHandler}> &gt; </Arrow>
         </td>
         <td>{price}$</td>

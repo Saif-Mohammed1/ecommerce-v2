@@ -6,6 +6,7 @@ import { Input, SignUpContainer } from "./signUp.styles";
 import { ErrorStyle } from "../router/add-new-items/add-items.styles";
 
 import { selectSignUpErrors } from "../../store/user/user.selectors";
+import api from "../../utils/axios/axios";
 
 const defaultFormFields = {
   name: "",
@@ -33,9 +34,17 @@ const SignUpForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(signUpStart(name, email, password, confirmPassword));
+    setError([]);
+    api
+      .get("/sanctum/csrf-cookie")
+      .then((response) => {
+        dispatch(signUpStart(name, email, password, confirmPassword));
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
   return (
     <SignUpContainer>

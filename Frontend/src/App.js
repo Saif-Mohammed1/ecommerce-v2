@@ -37,9 +37,7 @@ const App = () => {
       dispatch(userCartId(currentUser.id));
     }
   }, []);
-  useEffect(() => {
-    dispatch(checkUserSession());
-  }, []);
+
   useEffect(() => {
     dispatch(homeItemsStart());
   }, []);

@@ -8,6 +8,7 @@ export const Image = styled.img`
 export const Arrow = styled.span`
   font-size: ${Gsize};
   cursor: pointer;
+  display: inline-block;
 `;
 
 export const Remove = styled.td`

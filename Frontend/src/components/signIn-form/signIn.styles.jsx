@@ -47,6 +47,13 @@ export const SignInContainer = styled.div`
   label {
     margin: 8px 0;
   }
+  @media (max-width: 689px) {
+    height: 100vh;
+    padding: 20px 5px;
+    form {
+      width: 100%;
+    }
+  }
 `;
 
 export const UserIcon = styled(FontAwesomeIcon)`

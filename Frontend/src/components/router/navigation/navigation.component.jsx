@@ -21,14 +21,12 @@ import {
 import { signOutStart } from "../../../store/user/user.action";
 import { selectCartItems } from "../../../store/cart/cart.selectors";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const cartItems = useSelector(selectCartItems);
   const IsAdmin = useSelector(isAdminExist);
   const [searchFiled, setSearchFiled] = useState("");
-  const [u, setU] = useState(false);
   const dispatch = useDispatch();
   const signOutHandler = () => dispatch(signOutStart());
   const navigate = useNavigate();
@@ -79,7 +77,7 @@ const Navigation = () => {
           ) : (
             <NavLink to="/auth">
               <p>
-                <span>Hello: Guest</span> Sign in
+                Hello: Guest<span className="sign"> Sign in</span>
               </p>
             </NavLink>
           )}
@@ -91,7 +89,7 @@ const Navigation = () => {
               <CartIcon />
             </NavLink>
           ) : (
-            <NavLink as="div" onClick={() => setU(!u)}>
+            <NavLink as="div">
               <CartIcon />
             </NavLink>
           )}

@@ -67,6 +67,9 @@ export const HomeItemContainer = styled.div`
       opacity: 0.9;
     }
   }
+  @media (max-width: 689px) {
+    min-width: 95%;
+  }
 `;
 export const Button = styled.button`
   position: absolute;

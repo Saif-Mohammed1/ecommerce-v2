@@ -67,6 +67,13 @@ export const SignUpContainer = styled.div`
     cursor: pointer;
     text-transform: uppercase;
   }
+  @media (max-width: 689px) {
+    height: 100vh;
+    padding: 20px 5px;
+    form {
+      width: 100%;
+    }
+  }
 `;
 
 export const Input = styled.input`

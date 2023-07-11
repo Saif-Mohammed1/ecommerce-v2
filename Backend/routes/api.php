@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['message' => 'CSRF cookie set']);
+})->name('sanctum.cookie');
 
 Route::resource('/home', MainPageController::class);
 Route::resource('/products', ProductController::class);
@@ -28,6 +32,19 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::resource('/cart', CartController::class);
+
+Route::get('auth/google', [SocialiteController::class, 'signInwithGoogle']);
+Route::get('callback/google', [SocialiteController::class, 'callbackToGoogle']);
+
+// Email verification endpoint
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware(['auth'])->name('verification.notice');
+
+// Email verification link route
+Route::get('/email/verify/{id}/{hash}', 'App\Http\Controllers\VerificationController@verify')
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
 
 // Route::group(['prefix' => 'products'], function () {
 //     Route::get('/', [ProductController::class, 'index']);

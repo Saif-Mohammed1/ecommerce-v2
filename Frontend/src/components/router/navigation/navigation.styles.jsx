@@ -146,22 +146,22 @@ export const NavLinks = styled.div`
   @media (min-width: 690px) {
     display: flex;
   }
-  @media (max-width: 689px) {
+  @media (max-width: 690px) {
     position: absolute;
-    width: 74px;
+    width: 100px;
     z-index: 1;
     display: ${({ clicked }) => (clicked ? "flex" : "none")};
     flex-direction: column;
     background-color: #2e2e36;
     height: fit-content;
-    top: 57px;
+    top: 70px;
     right: 7px;
     padding-bottom: 8px;
     &::before {
       content: "";
       position: absolute;
-      top: -31px;
-      left: 34px;
+      top: -40px;
+      left: 60px;
       z-index: 3;
       border-color: transparent transparent #2e2e36;
       border-style: solid;
@@ -187,10 +187,15 @@ export const NavLink = styled(Link)`
     font-weight: bold;
     color: ${GlColor};
     width: max-content;
+    padding: 3px 0;
 
-    span {
+    .sign {
       display: block;
-      font-size: 9px;
+      font-size: 14px;
+      text-align: center;
+      &:hover {
+        color: cornflowerblue;
+      }
     }
   }
   .add {

@@ -102,11 +102,10 @@ export const UpdateItem = styled(AddItem)`
 export const RemoveItem = styled.button`
   display: none;
   position: absolute;
-  top: -6px;
-  width: 3px;
+  top: 0;
+  width: 27px;
   color: red;
-  right: -3px;
-  left: unset;
+  right: 0;
   text-align: center;
   font-size: 18px;
   padding: 0px 7px;

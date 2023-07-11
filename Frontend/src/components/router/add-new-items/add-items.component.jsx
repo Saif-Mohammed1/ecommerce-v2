@@ -21,6 +21,7 @@ import {
   selectHomeIsLoading,
   selectHomesErrors,
 } from "../../../store/home/home.selector";
+import api from "../../../utils/axios/axios";
 const defaultField = {
   name: "",
   imageUrl: "",
@@ -95,8 +96,12 @@ const AddItems = () => {
       "title",
       title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()
     );
-
-    dispatch(addCategoriesStart(formData));
+    api
+      .get("/sanctum/csrf-cookie")
+      .then((res) => dispatch(addCategoriesStart(formData)))
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   const handleAddItem = (event) => {
@@ -132,8 +137,12 @@ const AddItems = () => {
         formData.append(key, value);
       }
     });
-
-    dispatch(homeFetchStart(formData));
+    api
+      .get("/sanctum/csrf-cookie")
+      .then((res) => dispatch(homeFetchStart(formData)))
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   const iconClick = () => {
