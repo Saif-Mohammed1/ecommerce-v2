@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    $userData = $request->user()->toArray();
+    unset($userData['admin']);
+
+    return response()->json(['user' => $userData, 'admin' =>
+        $request->user()->admin]);
 });
 Route::get('/sanctum/csrf-cookie', function () {
     return response()->json(['message' => 'CSRF cookie set']);

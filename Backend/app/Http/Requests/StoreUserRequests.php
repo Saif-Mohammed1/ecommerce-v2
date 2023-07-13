@@ -25,12 +25,8 @@ class StoreUserRequests extends FormRequest
             'name' => ['required', 'string'],
             // 'phone' => ['required', 'regex:/^\d{11}$/', 'unique:phones,phone'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => 'required',
-            'confirmPassword' => ['required', 'same:password', function ($attribute, $value, $fail) {
-                if (strlen($value) !== strlen($this->input('password'))) {
-                    $fail($attribute . ' should be equal to password.');
-                }
-            }]];
+            'password' => ['required', 'min:8', 'max:16'],
+            'confirmPassword' => ['required', 'same:password']];
 
     }
 }

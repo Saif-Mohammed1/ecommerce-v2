@@ -63,9 +63,6 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             Auth::user()->tokens()->delete();
-            // Auth::guard('api')->logout();
-            // it works fine without this line but when i use it
-            // i got     "message": "Method Illuminate\\Auth\\RequestGuard::logout does not exist.",
 
             $request->session()->invalidate();
             $request->session()->regenerateToken();

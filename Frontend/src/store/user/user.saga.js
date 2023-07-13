@@ -18,12 +18,13 @@ import { persistor } from "../store";
 
 function* sortDataAfterGoogleSuccess() {
   try {
-    const user = yield api.get("/user");
+    const {
+      data: { user, admin },
+    } = yield api.get("/user");
     const token = localStorage.getItem("Token");
-
-    yield put(signInSuccess(user.data, token));
-    yield put(userCartId(user.data.id));
-    yield put(AdminStart(user.data.admin));
+    yield put(signInSuccess(user, token));
+    yield put(userCartId(user.id));
+    yield put(AdminStart(admin));
     yield (window.location.href = "/"); // Redirect to the Main page
   } catch (error) {
     yield put(signInFailed(error));

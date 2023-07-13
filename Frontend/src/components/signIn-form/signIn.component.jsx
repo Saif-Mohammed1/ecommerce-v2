@@ -29,7 +29,7 @@ const SignInForm = () => {
   useEffect(() => {
     if (useSearch.get("errors")) {
       setError({
-        google: useSearch.get("errors"),
+        email: useSearch.get("errors"),
         // "Email already exists and is authenticated with a social account",
       });
     }
