@@ -23,6 +23,7 @@ import {
 import api from "../../utils/axios/axios";
 import { selectCategoriesErrors } from "../../store/categories/categories.selectors";
 import { ErrorStyle } from "../router/add-new-items/add-items.styles";
+import { Fragment } from "react";
 const defaultFiled = { id: null, name: "", price: "", imageUrl: "" };
 const ProductCard = ({ item, title }) => {
   const IsAdmin = useSelector(isAdminExist);
@@ -135,7 +136,7 @@ const ProductCard = ({ item, title }) => {
                   onChange={handleInputChange}
                 />
                 {error.imageUrl && (
-                  <ErrorStyle>The imageurl field is required</ErrorStyle>
+                  <ErrorStyle>The imageUrl field is required</ErrorStyle>
                 )}
               </div>
             ) : (
@@ -163,7 +164,11 @@ const ProductCard = ({ item, title }) => {
               {rating &&
                 Array(rating * 1)
                   .fill()
-                  .map((_, i) => <p>⭐</p>)}
+                  .map((_, i) => (
+                    <Fragment key={i}>
+                      <p>⭐</p>
+                    </Fragment>
+                  ))}
             </div>
           </Info>
         </>

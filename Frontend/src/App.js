@@ -5,7 +5,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { checkUserSession } from "./store/user/user.action";
 import { homeItemsStart } from "./store/home/home.action";
 import Spinner from "./components/spinner/spinner.component";
-import { selectCurrentUser } from "./store/user/user.selectors";
+import { isAdminExist, selectCurrentUser } from "./store/user/user.selectors";
 import { userCartId } from "./store/cart/cart.action";
 import { selectCartCount } from "./store/cart/cart.selectors";
 const Navigation = lazy(() =>
@@ -23,12 +23,18 @@ const SearchFiled = lazy(() =>
   import("./components/router/searchFiled/searchFiled.component")
 );
 const About = lazy(() => import("./components/router/about/about.component"));
+const Dashboard = lazy(() =>
+  import("./components/router/dashboard/dashboard.component")
+);
+
 const NotFoundPage = lazy(() =>
   import("./components/router/not-found-page/not-found-page.component")
 );
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const adminExist = useSelector(isAdminExist);
+
   const count = useSelector(selectCartCount);
 
   const dispatch = useDispatch();
@@ -42,6 +48,8 @@ const App = () => {
     dispatch(homeItemsStart());
   }, []);
 
+  // const view = document.querySelector("#root ");
+
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>
@@ -52,6 +60,7 @@ const App = () => {
           {count && <Route path="checkOut" element={<CheckOut />} />}
           <Route path="search" element={<SearchFiled />} />
           <Route path="about" element={<About />} />
+          {adminExist && <Route path="dashboard/*" element={<Dashboard />} />}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

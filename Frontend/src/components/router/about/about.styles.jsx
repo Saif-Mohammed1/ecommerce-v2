@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const sectionPadding = "50px";
 const base = styled(FontAwesomeIcon)`
@@ -11,7 +11,21 @@ const base = styled(FontAwesomeIcon)`
   &:hover {
     opacity: 0.7;
     margin-top: -5px;
+
+    animation-play-state: paused;
   }
+`;
+const Rotate = keyframes`
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  
 `;
 export const AboutContainer = styled.div`
   margin-top: -24px;
@@ -53,18 +67,23 @@ export const Social = styled.ul`
 
 export const GitHub = styled(base)`
   background-color: #333;
+  animation: ${Rotate} 4s linear 2s infinite;
 `;
 export const Facebook = styled(base)`
   background-color: #1877f2;
+  animation: ${Rotate} 4s linear 2s infinite;
 `;
 export const LinkedIn = styled(base)`
   background-color: #0077b5;
+  animation: ${Rotate} 4s linear 2s infinite;
 `;
 export const Telegram = styled(base)`
   background-color: #0088cc;
+  animation: ${Rotate} 4s linear 2s infinite;
 `;
 export const WhatsApp = styled(base)`
   background-color: #25d366;
+  animation: ${Rotate} 4s linear 2s infinite;
 `;
 export const Li = styled.li`
   padding: 6px;

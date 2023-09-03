@@ -6,7 +6,6 @@ import CategoriesPreview from "../categories-preview/categories-preview.componen
 import Category from "../category/category.component";
 import AddItems from "../router/add-new-items/add-items.component";
 import { isAdminExist } from "../../store/user/user.selectors";
-import NotFoundPage from "../router/not-found-page/not-found-page.component";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -19,7 +18,7 @@ const Shop = () => {
     <Routes>
       <Route index element={<CategoriesPreview />} />
       <Route path=":category" element={<Category />} />
-      {adminExist && <Route path="/addItems" element={<AddItems />} />}
+      {/* {adminExist && <Route path="/addItems" element={<AddItems />} />} */}
     </Routes>
   );
 };

@@ -50,7 +50,9 @@ function* EmailAndPasswordSingIn({ payload: { email, password } }) {
   } catch (error) {
     if (error.response.status === 422) {
       yield put(signInFailed(error.response.data.errors));
-    } else alert(error);
+    } else {
+      alert(error);
+    }
   }
 }
 
@@ -67,9 +69,13 @@ function* signUp({ payload: { email, password, name, confirmPassword } }) {
     yield put(AdminStart(data.admin));
     yield (window.location.href = "/"); // Redirect to the Main page
   } catch (error) {
-    if (error.response.status === 422) {
+    console.error("error", error);
+
+    if (error?.response?.status === 422) {
       yield put(signUpFailed(error.response.data.errors));
-    } else alert(error);
+    } else {
+      alert(error);
+    }
   }
 }
 

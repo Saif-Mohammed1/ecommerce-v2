@@ -97,17 +97,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const GlColor = "white";
 
 export const NavigationContainer = styled.div`
-  height: 70px;
+  /* height: 70px; */
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
   background-color: #2e2e36;
   align-items: center;
-
+  padding: 4px 0;
   @media (max-width: 690px) {
-    height: 50px;
-    padding: 0 4px;
+    /* height: 50px; */
+    flex-direction: column;
+
+    padding: 4px;
   }
 `;
 
@@ -141,22 +143,43 @@ export const NavLinks = styled.div`
   width: fit-content;
   height: 100%;
   align-items: center;
-  display: none;
+  display: flex;
   justify-content: flex-end;
-  @media (min-width: 690px) {
-    display: flex;
-  }
+
   @media (max-width: 690px) {
+    width: 100%;
+    margin-top: 8px; /* justify-content: flex-start !important; */
+    flex-direction: column;
+    /* font-size: 13px; */
+    padding: 0 6px;
+
+    align-items: center;
+    text-align: start;
+    max-height: ${({ clicked }) => (clicked ? "200px" : "0px")};
+    transition: max-height 2s linear;
+    overflow: hidden;
+    a {
+      width: 100%;
+    }
+    a ~ div {
+      display: flex;
+      width: 100%;
+    }
+    p {
+      width: 100%;
+      padding: 0;
+    }
+    /*
     position: absolute;
     width: 100px;
     z-index: 1;
-    display: ${({ clicked }) => (clicked ? "flex" : "none")};
     flex-direction: column;
     background-color: #2e2e36;
     height: fit-content;
     top: 70px;
     right: 7px;
-    padding-bottom: 8px;
+    padding-bottom: 8px;*/
+  } /*
     &::before {
       content: "";
       position: absolute;
@@ -167,7 +190,7 @@ export const NavLinks = styled.div`
       border-style: solid;
       border-width: 20px;
     }
-  }
+  } */
 `;
 
 export const NavLink = styled(Link)`
@@ -193,6 +216,10 @@ export const NavLink = styled(Link)`
       display: block;
       font-size: 14px;
       text-align: center;
+      @media (max-width: 690px) {
+        text-align: start;
+      }
+
       &:hover {
         color: cornflowerblue;
       }
@@ -200,15 +227,15 @@ export const NavLink = styled(Link)`
   }
   .add {
     color: white;
-    font-size: 50px;
+    /* font-size: 50px; */
     &:hover {
       color: cornflowerblue;
     }
   }
   @media (max-width: 690px) {
-    margin: 0 5px;
+    margin: 7px 5px;
     .add {
-      font-size: 36px;
+      font-size: 15px;
     }
   }
 `;

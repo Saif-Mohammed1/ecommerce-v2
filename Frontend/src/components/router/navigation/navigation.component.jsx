@@ -59,12 +59,15 @@ const Navigation = () => {
             />
             <SearchIcon icon={faSearch} />
           </SearchFieldForm>
+          <Bars icon={faBars} onClick={toggleNavLinks}></Bars>
         </NavContainer>
-        <Bars icon={faBars} onClick={toggleNavLinks}></Bars>
         <NavLinks clicked={showNavLinks}>
           {IsAdmin && (
-            <NavLink to="/shop/addItems">
-              <span className="add">+</span>
+            // <NavLink to="/shop/addItems">
+            //   {/* <span className="add">+</span> */}
+            // </NavLink>
+            <NavLink to="/dashboard">
+              <span className="add">Dashboard</span>
             </NavLink>
           )}
           {currentUser ? (

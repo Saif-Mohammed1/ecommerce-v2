@@ -11,7 +11,7 @@ import {
 import api from "../../utils/axios/axios";
 
 const HomeItems = ({ items }) => {
-  const { imageFile, imageUrl, title, route, id } = items;
+  const { imageFile, imageUrl, title, route, id, shop } = items;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const HomeItems = ({ items }) => {
       )}
       <Body onClick={onNavigateHandler}>
         <h2>{title}</h2>
-        <p>Shop Now</p>
+        <p>{shop}</p>
       </Body>
       <Button onClick={deleteItemHandler}>X</Button>
     </HomeItemContainer>

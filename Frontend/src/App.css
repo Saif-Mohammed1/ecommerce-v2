@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 a {
@@ -12,4 +13,21 @@ p {
 }
 button {
   border-width: 1px;
+}
+
+#root {
+  position: relative;
+}
+#root::before {
+  content: "";
+  position: fixed;
+  display: none;
+  right: 9px;
+  bottom: 21px;
+  width: 0;
+  height: 0;
+  border-color: transparent transparent black transparent;
+  border-width: 17px;
+  border-style: solid;
+  cursor: pointer;
 }
