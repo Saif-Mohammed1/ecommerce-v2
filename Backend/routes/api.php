@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\UserDashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::get('/sanctum/csrf-cookie', function () {
     return response()->json(['message' => 'CSRF cookie set']);
 })->name('sanctum.cookie');
 
+Route::resource('/users/dashboard', UserDashboardController::class);
 Route::resource('/home', MainPageController::class);
 Route::resource('/products', ProductController::class);
 Route::post('/signup', [AuthController::class, 'signup']);
