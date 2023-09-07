@@ -26,9 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json(['user' => $userData, 'admin' =>
         $request->user()->admin]);
 });
-Route::get('/sanctum/csrf-cookie', function () {
-    return response()->json(['message' => 'CSRF cookie set']);
-})->name('sanctum.cookie');
+// Route::get('/sanctum/csrf-cookie', function () {
+//     return response()->json(['message' => 'CSRF cookie set']);
+// })->name('sanctum.cookie');
 
 Route::resource('/users/dashboard', UserDashboardController::class);
 Route::resource('/home', MainPageController::class);

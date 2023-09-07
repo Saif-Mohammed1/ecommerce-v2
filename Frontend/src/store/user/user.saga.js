@@ -11,11 +11,12 @@ import {
   signUpFailed,
   signUpSuccess,
 } from "./user.action";
+
 import { USER_ACTIONS_TYPE } from "./user.types";
+
 import { userCartId } from "../cart/cart.action";
 import api from "../../utils/axios/axios";
 import { persistor } from "../store";
-
 function* sortDataAfterGoogleSuccess() {
   try {
     const {
@@ -48,7 +49,7 @@ function* EmailAndPasswordSingIn({ payload: { email, password } }) {
     yield put(AdminStart(data.admin));
     yield (window.location.href = "/"); // Redirect to the Main page
   } catch (error) {
-    if (error.response.status === 422) {
+    if (error?.response?.status === 422) {
       yield put(signInFailed(error.response.data.errors));
     } else {
       alert(error);

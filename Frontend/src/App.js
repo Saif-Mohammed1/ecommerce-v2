@@ -8,6 +8,7 @@ import Spinner from "./components/spinner/spinner.component";
 import { isAdminExist, selectCurrentUser } from "./store/user/user.selectors";
 import { userCartId } from "./store/cart/cart.action";
 import { selectCartCount } from "./store/cart/cart.selectors";
+import axios from "axios";
 const Navigation = lazy(() =>
   import("./components/router/navigation/navigation.component")
 );
@@ -47,6 +48,12 @@ const App = () => {
   useEffect(() => {
     dispatch(homeItemsStart());
   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("https://laravel-edb.000webhostapp.com/api/opt-clear")
+  //     .then((re) => console.log("re", re))
+  //     .catch((err) => console.log("err", err));
+  // }, []);
 
   // const view = document.querySelector("#root ");
 

@@ -45,6 +45,7 @@ const SignInForm = () => {
     e.preventDefault();
     setError([]);
     if (!email || !password) return;
+
     api
       .get("/sanctum/csrf-cookie")
       .then((response) => {
